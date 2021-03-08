@@ -51,9 +51,9 @@ if (input.length != 0) {
                 content = content.join('\n');
 
                 if (typeof overWriteFile == 'undefined' && typeof appendFile == 'undefined')
-                    console.log(content);
+                    console.log(chalk.italic.whiteBright(content));
             } else {
-                console.log("Invalid path file", path.basename(file[i]), "not found!");
+                console.log(chalk.bold.redBright("\nInvalid path file"), chalk.bold.whiteBright(path.basename(file[i])), chalk.bold.redBright("not found!"));
                 return;
             }
         }
