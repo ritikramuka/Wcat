@@ -12,20 +12,19 @@ if (input.length != 0) {
     if (input[0] == 'help') {
         helpFile.fn();
     } else {
-        let command = [], file = [], overridingFile, appendFile;
+        let command = [], file = [], overWriteFile, appendFile;
         for (let i = 0; i < input.length; i++) {
-            if (input[i].startsWith('-'))
+            if (input[i].startsWith('-')) {
                 command.push(input[i]);
-            else if (input[i] == '>') {
-                overridingFile = input[i + 1];
+            } else if (input[i] == '>') {
+                overWriteFile = input[i + 1];
                 break;
-            }
-            else if (input[i] == '>>') {
+            } else if (input[i] == '>>') {
                 appendFile = input[i + 1];
                 break;
-            }
-            else
+            } else {
                 file.push(input[i]);
+            }
         }
         let content = '';
         for (let i = 0; i < file.length; i++) {
@@ -33,24 +32,43 @@ if (input.length != 0) {
                 let data = fs.readFileSync(file[i]);
                 content += data.toString();
                 content = content.split("\n");
-                if (command.includes('-s'))
+                if (command.includes('-s')) {
                     content = removeSpacesFile.fn(content);
+                }
 
-                if (command.includes('-b') && command.includes('-n'))
-                    if (command.indexOf('-b') < command.indexOf('-n'))
+                if (command.includes('-b') && command.includes('-n')) {
+                    if (command.indexOf('-b') < command.indexOf('-n')) {
                         content = numberNonEmptyLine.fn(content);
-                    else
+                    } else {
                         content = numberAllLine.fn(content);
-                else if (command.includes('-b'))
+                    }
+                } else if (command.includes('-b')) {
                     content = numberNonEmptyLine.fn(content);
-                else if (command.includes('-n'))
+                } else if (command.includes('-n')) {
                     content = numberAllLine.fn(content);
+                }
 
                 content = content.join('\n');
 
+                if (typeof overWriteFile == 'undefined' && typeof appendFile == 'undefined')
+                    console.log(content);
             } else {
-                console.log("Invalid path", file[i], "File not found!");
+                console.log("Invalid path file", path.basename(file[i]), "not found!");
                 return;
+            }
+        }
+        if (typeof overWriteFile != 'undefined' || typeof appendFile != 'undefined') {
+            if (typeof overWriteFile != 'undefined') {
+                fs.writeFileSync(overWriteFile, content);
+            } else {
+                if (fs.existsSync(appendFile)) {
+                    let fileData = fs.readFileSync(appendFile).toString();
+                    fileData += content;
+                    fs.writeFileSync(appendFile, fileData);
+                }
+                else {
+                    fs.writeFileSync(appendFile, content);
+                }
             }
         }
     }
