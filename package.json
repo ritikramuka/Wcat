@@ -1,0 +1,27 @@
+{
+  "name": "wcat",
+  "version": "1.0.0",
+  "description": "",
+  "main": "wcat.js",
+  "dependencies": {
+    "chalk": "^4.1.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ritikramuka/Wcat.git"
+  },
+  "keywords": [],
+  "author": "Ritik Ramuka",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ritikramuka/Wcat/issues"
+  },
+  "homepage": "https://github.com/ritikramuka/Wcat#readme",
+  "bin": {
+    "wcat": "./wcat.js"
+  }
+}

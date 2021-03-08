@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 let input = process.argv.slice(2);
 
 let fs = require('fs');
